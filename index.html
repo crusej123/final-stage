@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Final Challenge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f1f4f8;
+      margin: 0;
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #222;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75em;
+      margin-top: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 1em;
+      padding: 0.75em 1.5em;
+      background-color: #2d7ff9;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1b5edb;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .question {
+      margin-bottom: 1.5em;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      font-size: 1.2em;
+      color: green;
+      font-weight: bold;
+      margin-top: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Code Entry Page -->
+    <div class="section active" id="codePage">
+      <h1>Enter Your 4-Digit Code</h1>
+      <input type="text" id="codeInput" maxlength="4" placeholder="Enter code">
+      <button onclick="checkCode()">Unlock</button>
+    </div>
+
+    <!-- Final Questions Page -->
+    <div class="section" id="quizPage">
+      <h2>Final Questions</h2>
+
+      <div class="question">
+        <p>What city is the Colosseum in?</p>
+        <input type="text" id="q1"><br>
+        <button onclick="checkQuestion('q1', 'rome')">Check</button>
+      </div>
+
+      <div class="question">
+        <p>Which pizza was named after a queen?</p>
+        <input type="text" id="q2"><br>
+        <button onclick="checkQuestion('q2', 'margherita')">Check</button>
+      </div>
+
+      <div class="question">
+        <p>What is the Swiss Guard protecting?</p>
+        <input type="text" id="q3"><br>
+        <button onclick="checkQuestion('q3', 'the pope')">Check</button>
+      </div>
+
+      <div class="success-message" id="successMessage">
+        Look under the bed in our Airbnb bedroom.
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const correctCode = "1234"; // Change this to match your actual code
+    let correctAnswers = {
+      q1: false,
+      q2: false,
+      q3: false
+    };
+
+    function checkCode() {
+      const input = document.getElementById("codeInput").value.trim();
+      if (input === correctCode) {
+        document.getElementById("codePage").classList.remove("active");
+        document.getElementById("quizPage").classList.add("active");
+      } else {
+        alert("Incorrect code. Try again.");
+      }
+    }
+
+    function normalize(text) {
+      return text.trim().toLowerCase();
+    }
+
+    function checkQuestion(id, answer) {
+      const input = normalize(document.getElementById(id).value);
+      if (input === normalize(answer)) {
+        alert("Correct!");
+        correctAnswers[id] = true;
+        document.getElementById(id).disabled = true;
+        checkCompletion();
+      } else {
+        alert("Incorrect. Try again!");
+      }
+    }
+
+    function checkCompletion() {
+      if (Object.values(correctAnswers).every(Boolean)) {
+        document.getElementById("successMessage").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
