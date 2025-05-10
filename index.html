@@ -67,10 +67,27 @@
     .success-message {
       display: none;
       text-align: center;
-      font-size: 1.2em;
-      color: green;
-      font-weight: bold;
       margin-top: 2em;
+    }
+
+    .success-message button {
+      font-size: 1.2em;
+      background-color: #27ae60;
+    }
+
+    .success-message button:hover {
+      background-color: #1e874b;
+    }
+
+    .poem {
+      display: none;
+      text-align: center;
+      margin-top: 2em;
+      font-style: italic;
+      line-height: 1.8;
+      background: #fffbe6;
+      padding: 1.5em;
+      border-radius: 12px;
     }
   </style>
 </head>
@@ -106,15 +123,31 @@
         <button onclick="checkQuestion('q3', 'the pope')">Check</button>
       </div>
 
+      <!-- Final message with audio -->
       <div class="success-message" id="successMessage">
-        Look under the bed in our Airbnb bedroom.
+        <button onclick="playAndRevealPoem()">Play Me</button>
+        <audio id="secretAudio" preload="auto">
+          <source src="secret.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <!-- Poem section -->
+      <div class="poem" id="poem">
+        In cobbled streets where stories wind,<br>
+        A secret path you had to find.<br>
+        Through ancient stone and guard so bold,<br>
+        You chased a trail from days of old.<br><br>
+        And now, your prize, this final clue—<br>
+        It lives beneath, unseen by view.<br>
+        A resting place for head and dreams...<br>
+        Look beneath where the silence gleams.
       </div>
     </div>
-
   </div>
 
   <script>
-    const correctCode = "1234"; // Change this to match your actual code
+    const correctCode = "1234"; // Replace with the actual code
     let correctAnswers = {
       q1: false,
       q2: false,
@@ -151,6 +184,12 @@
       if (Object.values(correctAnswers).every(Boolean)) {
         document.getElementById("successMessage").style.display = "block";
       }
+    }
+
+    function playAndRevealPoem() {
+      const audio = document.getElementById("secretAudio");
+      audio.play();
+      document.getElementById("poem").style.display = "block";
     }
   </script>
 </body>
